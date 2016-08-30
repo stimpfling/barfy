@@ -9,11 +9,14 @@ def evMinions(minions):
         denom = minions[i][2]
         totalTime += time
         prob  = num / float(denom)
-        if i < len(minions)-1:
-            totalProb = (prob) * totalProb
+        if i == 0 :
+            totalProb = prob
+            expectedVal += totalTime * totalProb
+        elif i < len(minions)-1:
+            totalProb =  1 - (prob * totalProb)
             expectedVal += totalTime * totalProb
         else:
-            totalProb = 1-totalProb
+            totalProb = 1 - totalProb
             expectedVal += totalTime * totalProb
         
     return expectedVal
@@ -34,15 +37,15 @@ def sortMinions(mins,current):
         #print "swapping",i,i-1
         
         #print copy,lowestVal
-        print i,i-1
-        print copy
+        #print i,i-1
+        #print copy
         swap(copy,i,i-1)
         newVal = evMinions(copy)
-        print "swapped",copy,newVal
+        #print "swapped",copy,newVal
         if newVal < lowestVal:
             lowestVal = newVal
             #print "big swappy"
-            mins = copy
+            mins[:current+1] = copy
 
     return mins
     
@@ -75,13 +78,13 @@ print evMinions(minions)
 ##
 ####minions = [ [10, 1, 2],[5, 1, 5]]
 ####evMinions(minions)
-##minions = [[5, 1, 5],[10, 1, 2]]
-##print minions
-##print evMinions(minions)
-##
-##minions = [ [10, 1,2],[5, 1, 4]]
-##print minions
-##print evMinions(minions)
+minions = [[5, 1, 5],[10, 1, 2]]
+print minions
+print evMinions(minions)
+
+minions = [ [10, 1,2],[5, 1, 4]]
+print minions
+print evMinions(minions)
 
 ##minions = [ [10, 1, 2], [5 , 1, 4], [10, 1, 4]]
 ##print minions
